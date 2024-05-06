@@ -1,0 +1,19 @@
+{
+    "name": "Game.Gameplay.Master",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e8589728d756242f088afa51beb66a41",
+        "GUID:0540e96b879504a17afd5e4b8ffe9e8b",
+        "GUID:1bea151388b2d4b7ebcfaef201971686",
+        "GUID:25ef180d621ae4e358f55242f3a1b1a1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

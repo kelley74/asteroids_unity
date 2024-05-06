@@ -1,0 +1,22 @@
+{
+    "name": "Game.Ui.Installer",
+    "rootNamespace": "",
+    "references": [
+        "Game.Ui.Base",
+        "Game.DiContainer",
+        "Game.Ui.MainMenu",
+        "Game.Gameplay.Master",
+        "Game.GameData",
+        "Game.Ui.FinishScreen",
+        "Game.Ui.GameplayScreen"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

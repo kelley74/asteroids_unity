@@ -1,0 +1,90 @@
+{
+    "name": "InputMap",
+    "maps": [
+        {
+            "name": "MoveForward",
+            "id": "e7acb45c-c8da-4c76-949c-71d79c9c519a",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "ab1115aa-c88c-4983-87f2-11da8df3b3b3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "61752048-76c8-48f4-9756-a5e967588e89",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "RotateLeft",
+            "id": "27e2841f-f759-4930-b790-5cb78d51451a",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "8c235ff9-6e5e-44da-aa73-4b1cf8a8e6b7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "be29ba60-044d-40f3-9a2e-c06bf82274e8",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "RotateRight",
+            "id": "b0d1b2b9-ffed-428b-83bd-9661546ed14d",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "75c4965f-12ee-4c01-ba01-b16878c1a64d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4b4e3c56-1d20-4ba1-bef2-48d7db2033d2",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

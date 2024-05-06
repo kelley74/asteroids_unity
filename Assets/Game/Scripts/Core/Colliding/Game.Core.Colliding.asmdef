@@ -1,0 +1,16 @@
+{
+    "name": "Game.Core.Colliding",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e9011f4a8eb664daeb8e7bf2948561ae"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

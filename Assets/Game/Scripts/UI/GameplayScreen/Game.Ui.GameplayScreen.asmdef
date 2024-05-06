@@ -1,0 +1,18 @@
+{
+    "name": "Game.Ui.GameplayScreen",
+    "rootNamespace": "",
+    "references": [
+        "GUID:61b6a726573b94dbe8743850ebe08117",
+        "GUID:25ef180d621ae4e358f55242f3a1b1a1",
+        "GUID:0b344dc4776904053b3ef1dd8c860acd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
