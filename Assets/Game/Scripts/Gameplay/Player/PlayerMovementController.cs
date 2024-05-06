@@ -12,11 +12,13 @@ namespace Game.Gameplay.Player
         private float _angle;
         private readonly IMoveComponent _moveComponent;
         private float _velocity;
+        private float _speed;
         
-        public BulletMovementController(Vector3 initialPosition, float angle, IMoveComponent component)
+        public BulletMovementController(Vector3 initialPosition, float angle, IMoveComponent component, float speed)
         {
             _position = initialPosition;
             _angle = angle;
+            _speed = speed;
             _moveComponent = component;
         }
 
@@ -24,7 +26,7 @@ namespace Game.Gameplay.Player
         {
             var radAngle = _angle * Mathf.PI / 180;
             var direction = new Vector3(-Mathf.Sin(radAngle), Mathf.Cos(radAngle), 0).normalized;
-            _velocity = deltaTime * 10; // Add config
+            _velocity = deltaTime * _speed;
             _position += direction * _velocity;
         }
 

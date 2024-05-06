@@ -17,4 +17,5 @@ MonoBehaviour:
   _postSpawnDelay: 1
   _speed: 1.5
   _spawnRadius: 5
+  _radius: 0.15
   _generation: 1

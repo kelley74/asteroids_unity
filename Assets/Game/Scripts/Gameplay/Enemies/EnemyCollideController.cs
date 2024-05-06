@@ -1,5 +1,6 @@
 using System;
 using Game.BindingContainer;
+using Game.Core.Life;
 using Game.Core.Movement;
 using Game.Scripts.Core.Colliding;
 using UnityEngine;
@@ -10,12 +11,14 @@ namespace Game.Gameplay.Enemies
     {
         private ICollidable.ColliderType _type = ICollidable.ColliderType.Enemy;
         private IMovable _movable;
-        private Action _onBulletCollided;
+        private Action<DeadReason> _onBulletCollided;
+        private float _radius;
 
-        public EnemyCollideController(IMovable movable, Action onBulletCollided)
+        public EnemyCollideController(IMovable movable, Action<DeadReason> onBulletCollided, EnemyConfig config)
         {
             _movable = movable;
             _onBulletCollided = onBulletCollided;
+            _radius = config.Radius;
         }
 
         public bool CheckCollisions(ICollidable collidable)
@@ -25,7 +28,14 @@ namespace Game.Gameplay.Enemies
                 case ICollidable.ColliderType.Bullet:
                     if ((GetPosition() - collidable.GetPosition()).sqrMagnitude < GetRadius() + collidable.GetRadius())
                     {
-                        _onBulletCollided?.Invoke();
+                        _onBulletCollided?.Invoke(DeadReason.Bullet);
+                        return true;
+                    }
+                    break;
+                case ICollidable.ColliderType.Laser:
+                    if ((GetPosition() - collidable.GetPosition()).sqrMagnitude < GetRadius() + collidable.GetRadius())
+                    {
+                        _onBulletCollided?.Invoke(DeadReason.Laser);
                         return true;
                     }
                     break;
@@ -45,7 +55,7 @@ namespace Game.Gameplay.Enemies
 
         public float GetRadius()
         {
-            return 0.25f;
+            return _radius;
         }
     }
 }

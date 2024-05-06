@@ -17,7 +17,7 @@ namespace Game.Gameplay.Enemies.Alien
             // There is no logic of self killing
         }
 
-        public void Release(bool self = true)
+        public void Release(DeadReason reason)
         {
             _isAlive = false;
             _model.OnDied?.Invoke(this);

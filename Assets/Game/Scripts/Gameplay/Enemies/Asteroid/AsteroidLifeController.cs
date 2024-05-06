@@ -10,9 +10,9 @@ namespace Game.Gameplay.Enemies.Asteroid
         private AsteroidLifeModel _model;
         private bool _isAlive;
 
-        void ILiveable.Release(bool self)
+        void ILiveable.Release(DeadReason reason)
         {
-            _model.OnDied.Invoke(this, self, _model.Generation, _model.Movable.GetPosition());
+            _model.OnDied.Invoke(this, reason, _model.Generation, _model.Movable.GetPosition());
         }
 
         void ILiveable.Init(ILifeModel model)

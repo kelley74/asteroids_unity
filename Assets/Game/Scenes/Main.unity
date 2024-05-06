@@ -337,6 +337,7 @@ MonoBehaviour:
   _forwardAction: {fileID: -7538609497959086796, guid: 055e955cc52c64d5f850011b339100ce, type: 3}
   _leftRotationAction: {fileID: 9186007832221804233, guid: 055e955cc52c64d5f850011b339100ce, type: 3}
   _rightRotationAction: {fileID: -24388059311929061, guid: 055e955cc52c64d5f850011b339100ce, type: 3}
+  _firePressAction: {fileID: -4099932773320957557, guid: 055e955cc52c64d5f850011b339100ce, type: 3}
 --- !u!1 &360112295
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,6 +957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4277932770085200771, guid: 522bc857cf517419f8fd97cb399f459a, type: 3}
   _bulletPrefab: {fileID: 4474712285206614061, guid: 624f483f73af348c0b2c057459955a29, type: 3}
+  _laserPrefab: {fileID: 4474712285206614061, guid: 586b0541a5a2c49e9bf938551b7be391, type: 3}
   _config: {fileID: 11400000, guid: e53c4ebac26814a878bdd14adf08bc3f, type: 2}
 --- !u!1 &1125814474
 GameObject:

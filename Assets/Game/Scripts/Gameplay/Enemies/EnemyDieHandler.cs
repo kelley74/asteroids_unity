@@ -20,18 +20,22 @@ namespace Game.Gameplay.Enemies
             _enemyOwner.OnEnemyDestroyed(liveable, false);
         }
 
-        private void OnAsteroidDied(ILiveable liveable, bool selfDestroyed, int generation, Vector3 position)
+        private void OnAsteroidDied(ILiveable liveable, DeadReason reason, int generation, Vector3 position)
         {
-            if (!selfDestroyed && generation == 0 || generation == 1)
+            if (reason != DeadReason.Self && generation == 0 || generation == 1)
             {
-                var config = generation == 0 ? _asteroidLevel1 : _asteroidLevel2;
-                _enemyOwner.SpawnEnemy(config,
-                    position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0));
-                _enemyOwner.SpawnEnemy(config,
-                    position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0));
+                if (reason == DeadReason.Bullet)
+                {
+                    var config = generation == 0 ? _asteroidLevel1 : _asteroidLevel2;
+                    _enemyOwner.SpawnEnemy(config,
+                        position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0));
+                    _enemyOwner.SpawnEnemy(config,
+                        position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0));
+                }
+                
             }
 
-            _enemyOwner.OnEnemyDestroyed(liveable, selfDestroyed);
+            _enemyOwner.OnEnemyDestroyed(liveable, reason == DeadReason.Self);
         }
     }
 }

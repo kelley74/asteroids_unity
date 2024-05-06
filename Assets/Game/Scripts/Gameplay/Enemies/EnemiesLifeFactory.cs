@@ -9,10 +9,10 @@ namespace Game.Gameplay.Enemies
 {
     public class EnemiesLifeFactory : IEnemyLifeFactory
     {
-        private Action<ILiveable,bool,int,Vector3> _onAsteroidDied;
+        private Action<ILiveable,DeadReason,int,Vector3> _onAsteroidDied;
         private Action<ILiveable> _onAlienShipDied;
 
-        public EnemiesLifeFactory(Action<ILiveable> onAlienShipDied, Action<ILiveable,bool,int,Vector3> onAsteroidDied)
+        public EnemiesLifeFactory(Action<ILiveable> onAlienShipDied, Action<ILiveable,DeadReason,int,Vector3> onAsteroidDied)
         {
             _onAlienShipDied = onAlienShipDied;
             _onAsteroidDied = onAsteroidDied;

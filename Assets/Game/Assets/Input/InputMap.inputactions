@@ -84,6 +84,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Fire",
+            "id": "726dcc18-2268-43ed-825f-d4e2b80e5e84",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "609b5c12-3a74-45cc-b66d-66897e99a29f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "512e43fd-a88f-4dc5-88b9-56ae91ac6ce5",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "511ba1f5-3b15-4e6e-b86d-619a5703a42d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

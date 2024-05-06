@@ -21,11 +21,13 @@ namespace Game.Gameplay.Enemies
         [SerializeField] private float _postSpawnDelay;
         [SerializeField] private float _speed;
         [SerializeField] private float _spawnRadius = 5f;
+        [SerializeField] private float _radius = 0.25f;
 
         public GameObject Prefab => _prefab;
         public float PostSpawnDelay => _postSpawnDelay;
         public float Speed => _speed;
         public float SpawnRadius => _spawnRadius;
+        public float Radius => _radius;
 
         // Kind of abstract factory, so Enemy Owner will not know about IMovable Implementation
         public IMovable GetMovementController(Vector3 position, IMoveComponent moveComponent)

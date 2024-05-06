@@ -7,7 +7,7 @@ namespace Game.Core.Life
         bool IsAlive();
         void CheckLive();
 
-        void Release(bool self = true);
+        void Release(DeadReason reason);
 
         void Init(ILifeModel model);
     }
@@ -15,5 +15,12 @@ namespace Game.Core.Life
     public interface ILifeModel
     {
         
+    }
+    
+    public enum DeadReason
+    {
+        Self,
+        Bullet,
+        Laser
     }
 }

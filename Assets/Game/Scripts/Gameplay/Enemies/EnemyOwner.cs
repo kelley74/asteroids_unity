@@ -112,7 +112,7 @@ namespace Game.Gameplay.Enemies
             }
 
             var collideController =
-                new EnemyCollideController(movementController, () => { lifeController.Release(false); });
+                new EnemyCollideController(movementController, (reason) => { lifeController.Release(reason); }, enemyConfig);
 
             // Register entity controllers in Systems
             entityConfigurator.AddSystem<LifeSystem>(lifeController);

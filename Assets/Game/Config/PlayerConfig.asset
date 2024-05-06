@@ -22,3 +22,5 @@ MonoBehaviour:
   _boundariesScale: 1.1
   _teleportOffset: 1.9
   _bulletCooldown: 0.2
+  _bulletSpeed: 10
+  _laserSpeed: 40

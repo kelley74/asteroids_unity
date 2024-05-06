@@ -18,6 +18,8 @@ namespace Game.Gameplay.Player
         
         [Header("Shooting")]
         [SerializeField] private float _bulletCooldown = 0.5f;
+        [SerializeField] private float _bulletSpeed = 20f;
+        [SerializeField] private float _laserSpeed = 40f;
 
         public float Acceleration => _acceleration;
         public float Deceleration => _deceleration;
@@ -29,5 +31,7 @@ namespace Game.Gameplay.Player
         public float BoundariesScale => _boundariesScale;
         public float TeleportOffset => _teleportOffset;
         public float BulletCooldownTime => _bulletCooldown;
+        public float BulletSpeed => _bulletSpeed;
+        public float LaserSpeed => _laserSpeed;
     }
 }

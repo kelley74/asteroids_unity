@@ -27,7 +27,7 @@ namespace Game.Core.Life
 
             foreach (var deadEntity in deadEntities)
             {
-                deadEntity.Release(true);
+                deadEntity.Release(DeadReason.Self);
             }
         }
     }

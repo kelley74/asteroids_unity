@@ -27,7 +27,7 @@ namespace Game.Gameplay.Player
             }
         }
 
-        public void Release(bool self)
+        public void Release(DeadReason reason)
         {
             _isAlive = false;
             _model.OnDied.Invoke(this);
