@@ -13,3 +13,6 @@ to a Game Object.
 - For improving memory usage there is Pool of Game Objects. So no game objects are being disposed. All of them are supposed to be re-used.
 - UI Screens are implemented according MVC pattern.
 - There are also some patterns inprojects such as Factory and others.
+# Lycense 
+- The project has only Skill-Demonstration purpose, it is NOT a commercial project, all assets are downloaded from open source.
+- Any assets can be property of Unity LTD or any Other 3D party property. 
