@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace Game.Core.GameSystems
 {
+    /// <summary>
+    /// Presents an Entity that can have Configuration of Systems and reference to a Game Object
+    /// </summary>
     public class EntityConfigurator
     {
-        private Dictionary<GameSystem, IGameEntity> _configuration = new Dictionary<GameSystem, IGameEntity>();
+        private readonly Dictionary<GameSystem, IGameEntity> _configuration = new Dictionary<GameSystem, IGameEntity>();
         private GameObject _gameObject;
 
         public void AddSystem<T>(IGameEntity entity) where T : GameSystem

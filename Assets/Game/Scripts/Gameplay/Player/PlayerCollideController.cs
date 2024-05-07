@@ -7,14 +7,15 @@ namespace Game.Gameplay.Player
 {
     public class PlayerCollideController : ICollidable
     {
-        private IMovable _movable;
-        private Action _onPlayerCollider;
+        private readonly IMovable _movable;
+        private readonly Action _onPlayerCollider;
         
         public PlayerCollideController(IMovable movable, Action onPlayerCollider)
         {
             _movable = movable;
             _onPlayerCollider = onPlayerCollider;
         }
+        // ReSharper disable once IdentifierTypo
         public bool CheckCollisions(ICollidable collidable)
         {
             if (collidable.GetColliderType() == ICollidable.ColliderType.Enemy)

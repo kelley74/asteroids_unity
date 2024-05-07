@@ -11,16 +11,4 @@ namespace Game.Core.Life
 
         void Init(ILifeModel model);
     }
-
-    public interface ILifeModel
-    {
-        
-    }
-    
-    public enum DeadReason
-    {
-        Self,
-        Bullet,
-        Laser
-    }
 }

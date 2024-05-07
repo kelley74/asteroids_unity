@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Game.Core.Input
 {
@@ -12,7 +11,7 @@ namespace Game.Core.Input
         [SerializeField] private InputActionReference _forwardAction;
         [SerializeField] private InputActionReference _leftRotationAction;
         [SerializeField] private InputActionReference _rightRotationAction;
-        [FormerlySerializedAs("_spacePressAction")] [SerializeField] private InputActionReference _firePressAction;
+        [SerializeField] private InputActionReference _firePressAction;
 
         public float ForwardSpeed { get; private set; }
         public float RotationSpeed { get; private set; }
@@ -22,6 +21,7 @@ namespace Game.Core.Input
             Activate(true);
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void Activate(bool value)
         {
             if (value)

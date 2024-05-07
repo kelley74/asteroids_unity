@@ -29,6 +29,8 @@ namespace Game.Core.Colliding
                         continue;
                     }
 
+                    // TODO: Make removing-safe system
+                    // We start bypassing the entity list as a fallback 
                     if (colliderEntity.CheckCollisions(collidable))
                     {
                         collidable.CheckCollisions(colliderEntity);
