@@ -1,7 +1,6 @@
 using Game.Core.GameSystems;
-using UnityEngine;
 
-namespace Game.Scripts.Core.Colliding
+namespace Game.Core.Colliding
 {
     public class CollideSystem : GameSystem
     {
@@ -24,6 +23,7 @@ namespace Game.Scripts.Core.Colliding
                         continue;
                     }
                     
+                    // ReSharper disable once IdentifierTypo
                     if (_entityList[j] is not ICollidable collidable)
                     {
                         continue;
@@ -38,23 +38,5 @@ namespace Game.Scripts.Core.Colliding
                 }
             }
         }
-    }
-
-    public interface ICollidable : IGameEntity
-    {
-        public enum ColliderType
-        {
-            Player,
-            Bullet,
-            Laser,
-            Enemy
-        }
-        bool CheckCollisions(ICollidable collidable);
-
-        ColliderType GetColliderType();
-
-        Vector3 GetPosition();
-
-        float GetRadius();
     }
 }

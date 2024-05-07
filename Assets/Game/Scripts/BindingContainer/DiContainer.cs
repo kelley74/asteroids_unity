@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.BindingContainer
 {
@@ -8,6 +7,7 @@ namespace Game.BindingContainer
     {
         private static DiContainer _container;
         
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private Dictionary<string, object> _bindingDictionary = new Dictionary<string, object>();
 
         public static void Create()

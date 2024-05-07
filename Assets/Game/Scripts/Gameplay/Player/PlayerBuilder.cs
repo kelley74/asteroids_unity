@@ -5,7 +5,7 @@ using Game.Core.GameSystems;
 using Game.Core.Input;
 using Game.Core.Life;
 using Game.Core.Movement;
-using Game.Scripts.Core.Colliding;
+using Game.Core.Colliding;
 using Game.Scripts.GameData;
 using Game.Scripts.Gameplay.Floaters;
 using Game.Services.Pools;

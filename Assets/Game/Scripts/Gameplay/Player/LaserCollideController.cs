@@ -1,6 +1,6 @@
 using System;
 using Game.Core.Movement;
-using Game.Scripts.Core.Colliding;
+using Game.Core.Colliding;
 using UnityEngine;
 
 namespace Game.Gameplay.Player

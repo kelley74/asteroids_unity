@@ -1,9 +1,8 @@
 using Game.BindingContainer;
 using Game.Core.Life;
 using Game.Core.Movement;
-using Game.Scripts.Core.Colliding;
+using Game.Core.Colliding;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game.Core.SystemsInstaller
 {
