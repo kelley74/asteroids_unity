@@ -7,7 +7,7 @@ namespace Game.Gameplay.Player
     public class BulletLifeModel : ILifeModel
     {
         public Action<ILiveable> OnDied { get; private set; }
-        public IMovable Movable;
+        public IMovable Movable { get; private set; }
 
         public BulletLifeModel(Action<ILiveable> onDied, IMovable movable)
         {

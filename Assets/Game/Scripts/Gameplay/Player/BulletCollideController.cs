@@ -7,9 +7,9 @@ namespace Game.Gameplay.Player
 {
     public class BulletCollideController : ICollidable
     {
-        private ICollidable.ColliderType _type = ICollidable.ColliderType.Bullet;
-        private IMovable _movable;
-        private Action _onEnemyCollided;
+        private readonly ICollidable.ColliderType _type = ICollidable.ColliderType.Bullet;
+        private readonly IMovable _movable;
+        private readonly Action _onEnemyCollided;
 
         public BulletCollideController(IMovable movable, Action onEnemyCollided)
         {
@@ -17,6 +17,7 @@ namespace Game.Gameplay.Player
             _onEnemyCollided = onEnemyCollided;
         }
 
+        // ReSharper disable once IdentifierTypo
         public bool CheckCollisions(ICollidable collidable)
         {
             if (collidable.GetColliderType() == ICollidable.ColliderType.Enemy)

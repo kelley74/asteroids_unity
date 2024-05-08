@@ -20,10 +20,10 @@ namespace Game.Scripts.GameData
         private float _lastShootTime;
         private bool _laserRestore;
 
-        public GameplayData(float laserCooldown, int laserAmmo)
+        public GameplayData(GameplayConfig config)
         {
-            _laserCooldown = laserCooldown;
-            LaserMaxAmmo = laserAmmo;
+            _laserCooldown = config.LaserCooldown;
+            LaserMaxAmmo = config.LaserAmmo;
         }
 
         public void SetPlayerState(float velocity, float angle, Vector2 coordinates)

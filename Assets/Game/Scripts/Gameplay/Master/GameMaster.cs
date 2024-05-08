@@ -14,6 +14,7 @@ namespace Game.Gameplay.Master
         [SerializeField] private PlayerBuilder _playerBuilder;
         [SerializeField] private EnemyOwner _enemyOwner;
         [SerializeField] private EnemyDieHandler _enemyDieHandler;
+        [SerializeField] private GameplayConfig _gameplayConfig;
 
         private GameRoundData _gameRoundData;
         private GameplayData _gameplayData;
@@ -26,7 +27,7 @@ namespace Game.Gameplay.Master
         public void StartGame()
         {
             _gameRoundData = new GameRoundData();
-            _gameplayData = new GameplayData(1f, 5);// Add config
+            _gameplayData = new GameplayData(_gameplayConfig);
             _playerBuilder.CreatePlayer(_gameplayData, FinishGame);
             var lifeFactory = _enemyDieHandler.GetFactory();
             _enemyOwner.CreateRound(_playerBuilder.Player, lifeFactory, _gameRoundData);

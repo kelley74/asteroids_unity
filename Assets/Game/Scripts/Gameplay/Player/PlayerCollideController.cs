@@ -42,7 +42,7 @@ namespace Game.Gameplay.Player
 
         public float GetRadius()
         {
-            return 0.1f;
+            return 0.1f; // TODO: Config
         }
     }
 }

@@ -910,7 +910,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletFloaterPrefab: {fileID: 4239760599406648292, guid: b3deee62486974a6998ac0f3823c71db, type: 3}
   _explosionFloaterPrefab: {fileID: 4239760599406648292, guid: 58e2ada38011c4ac084f4c4dead3793b, type: 3}
-  _floaterTime: 1
+  _bulletTime: 1
+  _explosionTime: 0.75
 --- !u!1 &1026141620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,6 +1149,7 @@ MonoBehaviour:
   _playerBuilder: {fileID: 1026141622}
   _enemyOwner: {fileID: 682376250}
   _enemyDieHandler: {fileID: 682376251}
+  _gameplayConfig: {fileID: 11400000, guid: a034523f778724f7b934700e5904768a, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

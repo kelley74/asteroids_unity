@@ -7,9 +7,9 @@ namespace Game.Gameplay.Player
 {
     public class LaserCollideController : ICollidable
     {
-        private ICollidable.ColliderType _type = ICollidable.ColliderType.Laser;
-        private IMovable _movable;
-        private Action _onEnemyCollided;
+        private readonly ICollidable.ColliderType _type = ICollidable.ColliderType.Laser;
+        private readonly IMovable _movable;
+        private readonly Action _onEnemyCollided;
 
         public LaserCollideController(IMovable movable, Action onEnemyCollided)
         {
@@ -43,7 +43,7 @@ namespace Game.Gameplay.Player
 
         public float GetRadius()
         {
-            return 0.1f;
+            return 0.1f; //TODO: Create config
         }
     }
 }

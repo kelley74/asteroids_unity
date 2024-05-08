@@ -6,12 +6,13 @@ namespace Game.Gameplay.Enemies.Asteroid
 {
     public class AsteroidMovementController : IMovable
     {
+        private readonly Vector3 _direction;
+        private readonly AsteroidConfig _config;
+        private readonly float _angularVelocity;
+        
         private Vector3 _position;
         private readonly IMoveComponent _moveComponent;
         private float _rotationAngle;
-        private Vector3 _direction;
-        private AsteroidConfig _config;
-        private float _angularVelocity;
         private float _velocity;
         
         public AsteroidMovementController(Vector3 initialPosition, IMoveComponent component, EnemyConfig config)
@@ -23,7 +24,7 @@ namespace Game.Gameplay.Enemies.Asteroid
             var angle = Random.Range(0, 2 * Mathf.PI);
             _rotationAngle = angle * 180 / Mathf.PI;
             _direction = new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0).normalized;
-            _angularVelocity = Random.Range(-50f, 50f);
+            _angularVelocity = Random.Range(-_config.RotationVelocity, _config.RotationVelocity);
         }
 
         void IMovable.Move(float deltaTime)

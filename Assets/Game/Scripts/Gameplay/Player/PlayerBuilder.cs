@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
 using Game.BindingContainer;
 using Game.Core.GameSystems;
 using Game.Core.Input;
-using Game.Core.Life;
 using Game.Core.Movement;
 using Game.Core.Colliding;
 using Game.Scripts.GameData;
-using Game.Scripts.Gameplay.Floaters;
+using Game.Gameplay.Floaters;
 using Game.Services.Pools;
 using UnityEngine;
 
@@ -20,19 +18,19 @@ namespace Game.Gameplay.Player
         [SerializeField] private GameObject _laserPrefab;
         [SerializeField] private PlayerConfig _config;
 
-        // Systems
-        private EntityConfigurator _playerConfigurator;
-
-        // Controllers
-        private IMovable _playerMovementController;
         public IMovable Player => _playerMovementController;
+        
+        private EntityConfigurator _playerConfigurator;
+        private IMovable _playerMovementController;
 
         private bool _isGameActive;
         private GameplayData _gameplayData;
+        private PlayerShootController _playerShootController;
 
         public void CreatePlayer(GameplayData gameplayData, Action onRoundComplete)
         {
             _gameplayData = gameplayData;
+            _playerShootController = new PlayerShootController();
             var pool = DiContainer.Resolve<GoPool>();
             var playerObject = pool.Pull(_prefab);
             // Movement Controller
@@ -46,14 +44,15 @@ namespace Game.Gameplay.Player
             _playerConfigurator.AddSystem<MovementSystem>(_playerMovementController);
             _playerConfigurator.AddSystem<CollideSystem>(collideController);
 
-            // TODO Create special class
-            StartCoroutine(ShootBullets(_playerMovementController, playerObject.transform));
+            // Start Constant Shooting
+            StartCoroutine(_playerShootController.ShootBullets(_playerMovementController, playerObject.transform,
+                _bulletPrefab, _config));
             _isGameActive = true;
 
             var input = DiContainer.Resolve<InputController>();
             input.OnFireCast += HandleFire;
         }
-        
+
         public void DestroyPlayer()
         {
             DiContainer.Resolve<FloaterSpawner>().SpawnExplosionFloater(_playerMovementController.GetPosition());
@@ -66,7 +65,7 @@ namespace Game.Gameplay.Player
 
             _playerMovementController = null;
             _isGameActive = false;
-            
+
             var input = DiContainer.Resolve<InputController>();
             input.OnFireCast -= HandleFire;
         }
@@ -88,83 +87,9 @@ namespace Game.Gameplay.Player
         {
             if (_gameplayData.LaserShoot())
             {
-                ShootLaser(_playerMovementController, _playerConfigurator.GetGameObject().transform);
+                _playerShootController.ShootLaser(_playerMovementController,
+                    _playerConfigurator.GetGameObject().transform, _laserPrefab, _config);
             }
-        }
-
-        private IEnumerator ShootBullets(IMovable playerMoveController, Transform playerGameObjectTransform)
-        {
-            var pool = DiContainer.Resolve<GoPool>();
-
-            while (true)
-            {
-                var configurator = new EntityConfigurator();
-                var bullet = pool.Pull(_bulletPrefab);
-                configurator.AssignGameObject(bullet);
-                var movementComponent = bullet.GetComponent<IMoveComponent>();
-
-                var moveController = new BulletMovementController(playerMoveController.GetPosition(),
-                    playerGameObjectTransform.eulerAngles.z, movementComponent, _config.BulletSpeed);
-
-                var lifeModel = new BulletLifeModel((t) =>
-                {
-                    configurator.UnregisterFormAllSystems();
-                    var obj = configurator.GetGameObject();
-                    pool.Push(obj);
-                }, moveController);
-                var lifeController = new BulletLifeController();
-                lifeController.Init(lifeModel);
-
-                var collideController = new BulletCollideController(moveController, () =>
-                {
-                    var bulletObject = configurator.GetGameObject();
-                    var floaterSpawner = DiContainer.Resolve<FloaterSpawner>();
-                    floaterSpawner.SpawnBulletFloater(bulletObject.transform.position);
-                    configurator.UnregisterFormAllSystems();
-                    pool.Push(bulletObject);
-                });
-
-                configurator.AddSystem<MovementSystem>(moveController);
-                configurator.AddSystem<LifeSystem>(lifeController);
-                configurator.AddSystem<CollideSystem>(collideController);
-
-                yield return new WaitForSeconds(_config.BulletCooldownTime);
-            }
-        }
-        
-        private void ShootLaser(IMovable playerMoveController, Transform playerGameObjectTransform)
-        {
-            var pool = DiContainer.Resolve<GoPool>();
-
-            var configurator = new EntityConfigurator();
-            var laser = pool.Pull(_laserPrefab);
-            configurator.AssignGameObject(laser);
-            var movementComponent = laser.GetComponent<IMoveComponent>();
-
-            var moveController = new BulletMovementController(playerMoveController.GetPosition(),
-                playerGameObjectTransform.eulerAngles.z, movementComponent, _config.LaserSpeed);
-
-            var lifeModel = new BulletLifeModel((t) =>
-            {
-                configurator.UnregisterFormAllSystems();
-                var obj = configurator.GetGameObject();
-                pool.Push(obj);
-            }, moveController);
-            var lifeController = new BulletLifeController();
-            lifeController.Init(lifeModel);
-
-            var collideController = new LaserCollideController(moveController, () =>
-            {
-                var bulletObject = configurator.GetGameObject();
-                var floaterSpawner = DiContainer.Resolve<FloaterSpawner>();
-                floaterSpawner.SpawnBulletFloater(bulletObject.transform.position);
-                //configurator.UnregisterFormAllSystems();
-                //pool.Push(bulletObject);
-            });
-
-            configurator.AddSystem<MovementSystem>(moveController);
-            configurator.AddSystem<LifeSystem>(lifeController);
-            configurator.AddSystem<CollideSystem>(collideController);
         }
     }
 }

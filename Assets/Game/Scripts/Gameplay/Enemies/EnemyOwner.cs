@@ -7,7 +7,7 @@ using Game.Core.Life;
 using Game.Core.Movement;
 using Game.Core.Colliding;
 using Game.Scripts.GameData;
-using Game.Scripts.Gameplay.Floaters;
+using Game.Gameplay.Floaters;
 using Game.Services.Pools;
 using UnityEngine;
 using Random = UnityEngine.Random;

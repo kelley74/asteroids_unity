@@ -5,9 +5,10 @@ namespace Game.Gameplay.Enemies.Alien
 {
     public class AlienMovementController : IMovable, IMoveTargetHolder
     {
-        private Vector3 _position;
         private readonly IMoveComponent _moveComponent;
-        private AlienConfig _config;
+        private readonly AlienConfig _config;
+        
+        private Vector3 _position;
         private float _rotationAngle;
         private IMovable _target;
         private Vector3 _currentDirection;

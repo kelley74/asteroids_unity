@@ -1,6 +1,6 @@
 using Game.BindingContainer;
 using Game.Gameplay.Master;
-using Game.Scripts.Gameplay.Floaters;
+using Game.Gameplay.Floaters;
 using UnityEngine;
 
 namespace Game.Gameplay.GameInstaller
