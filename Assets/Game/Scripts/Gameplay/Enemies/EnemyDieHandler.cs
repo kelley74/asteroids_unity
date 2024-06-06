@@ -1,14 +1,22 @@
+using System;
 using Game.BindingContainer;
 using Game.Core.Life;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.Gameplay.Enemies
 {
     public class EnemyDieHandler : MonoBehaviour
     {
-        [SerializeField] private EnemyOwner _enemyOwner;
         [SerializeField] private EnemyConfig _asteroidLevel1;
         [SerializeField] private EnemyConfig _asteroidLevel2;
+        
+        private EnemySpawnSystem _enemySpawnSystem;
+
+        private void Start()
+        {
+            _enemySpawnSystem = DiContainer.Resolve<EnemySpawnSystem>();
+        }
 
         public IEnemyLifeFactory GetFactory()
         {
@@ -17,7 +25,7 @@ namespace Game.Gameplay.Enemies
 
         private void OnAlienDied(ILiveable liveable)
         {
-            _enemyOwner.OnEnemyDestroyed(liveable, false);
+            _enemySpawnSystem.OnEnemyDestroyed(liveable, false);
         }
 
         private void OnAsteroidDied(ILiveable liveable, DeadReason reason, int generation, Vector3 position)
@@ -27,15 +35,15 @@ namespace Game.Gameplay.Enemies
                 if (reason == DeadReason.Bullet)
                 {
                     var config = generation == 0 ? _asteroidLevel1 : _asteroidLevel2;
-                    _enemyOwner.SpawnEnemy(config,
+                    _enemySpawnSystem.SpawnEnemy(config,
                         position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0));
-                    _enemyOwner.SpawnEnemy(config,
+                    _enemySpawnSystem.SpawnEnemy(config,
                         position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0));
                 }
                 
             }
 
-            _enemyOwner.OnEnemyDestroyed(liveable, reason == DeadReason.Self);
+            _enemySpawnSystem.OnEnemyDestroyed(liveable, reason == DeadReason.Self);
         }
     }
 }

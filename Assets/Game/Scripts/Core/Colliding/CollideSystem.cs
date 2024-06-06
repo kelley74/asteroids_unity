@@ -4,27 +4,25 @@ namespace Game.Core.Colliding
 {
     public class CollideSystem : GameSystem
     {
-        private void Update()
+        public override void Update()
         {
             
-            
-            
-            for (int i = 0; i < _entityList.Count; i++)
+            for (int i = 0; i < _componentsList.Count; i++)
             {
-                for (int j = 0; j < _entityList.Count; j++)
+                for (int j = 0; j < _componentsList.Count; j++)
                 {
                     if (i == j)
                     {
                         continue;
                     }
 
-                    if (_entityList[i] is not ICollidable colliderEntity)
+                    if (_componentsList[i] is not ICollidable colliderEntity)
                     {
                         continue;
                     }
                     
                     // ReSharper disable once IdentifierTypo
-                    if (_entityList[j] is not ICollidable collidable)
+                    if (_componentsList[j] is not ICollidable collidable)
                     {
                         continue;
                     }

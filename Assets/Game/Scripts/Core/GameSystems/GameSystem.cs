@@ -1,29 +1,28 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.Core.GameSystems
 {
     /// <summary>
     /// Abstract Game System. All systems should be inherited from Game System
     /// </summary>
-    public abstract class GameSystem : MonoBehaviour
+    public abstract class GameSystem
     {
         // ReSharper disable once InconsistentNaming
-        protected readonly List<IGameEntity> _entityList = new List<IGameEntity>();
-        
-        public void AddEntity(IGameEntity entity)
+        protected readonly List<IGameComponent> _componentsList = new List<IGameComponent>();
+
+        public void AddEntity<T>(T component) where T : IGameComponent
         {
-            _entityList.Add(entity);
+            _componentsList.Add(component);
         }
 
-        public void RemoveEntity(IGameEntity entity)
+        public void RemoveEntity<T>(T component) where T : IGameComponent
         {
-            _entityList.Remove(entity);
+            _componentsList.Remove(component);
         }
+        public abstract void Update();
     }
 
-    public interface IGameEntity
+    public interface IGameComponent
     {
-        
     }
 }

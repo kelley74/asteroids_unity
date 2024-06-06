@@ -30,14 +30,14 @@ namespace Game.Gameplay.Enemies
         public float Radius => _radius;
 
         // Kind of abstract factory, so Enemy Owner will not know about IMovable Implementation
-        public IMovable GetMovementController(Vector3 position, IMoveComponent moveComponent)
+        public IMovable GetMovementController(Vector3 position, IMoveEntity moveEntity)
         {
             switch (_enemyType)
             {
                 case EnemyType.Asteroid:
-                    return new AsteroidMovementController(position, moveComponent, this);
+                    return new AsteroidMovementController(position, moveEntity, this);
                 case EnemyType.AlienShip:
-                    return new AlienMovementController(position, moveComponent, this);
+                    return new AlienMovementController(position, moveEntity, this);
             }
 
             throw new Exception("Movement controller not found");

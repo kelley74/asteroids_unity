@@ -1,22 +1,19 @@
 using Game.BindingContainer;
+using Game.Core.Colliding;
 using Game.Core.Life;
 using Game.Core.Movement;
-using Game.Core.Colliding;
-using UnityEngine;
+using Game.Gameplay.Enemies;
 
 namespace Game.Core.SystemsInstaller
 {
     public class GameSystemsInstaller : BindingInstaller
     {
-        [SerializeField] private MovementSystem _movementSystem;
-        [SerializeField] private LifeSystem _lifeSystem;
-        [SerializeField] private CollideSystem _collideSystem;
-        
         public override void Bind()
         {
-            AddBinding(_movementSystem);
-            AddBinding(_lifeSystem);
-            AddBinding(_collideSystem);
+            AddBinding(new MovementSystem());
+            AddBinding(new LifeSystem());
+            AddBinding(new CollideSystem());
+            AddBinding(new EnemySpawnSystem());
         }
     }
 }

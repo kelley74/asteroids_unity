@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Core.Movement
 {
-    public class MoveComponent : MonoBehaviour, IMoveComponent
+    public class MoveEntity : MonoBehaviour, IMoveEntity
     {
         private Transform _transform;
 

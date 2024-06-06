@@ -2,7 +2,7 @@ using Game.Core.GameSystems;
 
 namespace Game.Core.Life
 {
-    public interface ILiveable : IGameEntity
+    public interface ILiveable : IGameComponent
     {
         bool IsAlive();
         void CheckLive();

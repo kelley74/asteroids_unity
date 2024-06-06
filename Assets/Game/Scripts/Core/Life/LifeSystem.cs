@@ -5,10 +5,10 @@ namespace Game.Core.Life
 {
     public class LifeSystem : GameSystem
     {
-        private void Update()
+        public override void Update()
         {
             var deadEntities = new List<ILiveable>();
-            foreach (var entity in _entityList)
+            foreach (var entity in _componentsList)
             {
                 if (entity is not ILiveable lifeEntity)
                 {

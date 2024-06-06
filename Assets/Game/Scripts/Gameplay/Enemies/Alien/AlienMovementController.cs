@@ -5,7 +5,7 @@ namespace Game.Gameplay.Enemies.Alien
 {
     public class AlienMovementController : IMovable, IMoveTargetHolder
     {
-        private readonly IMoveComponent _moveComponent;
+        private readonly IMoveEntity _moveEntity;
         private readonly AlienConfig _config;
         
         private Vector3 _position;
@@ -14,10 +14,10 @@ namespace Game.Gameplay.Enemies.Alien
         private Vector3 _currentDirection;
         private float _velocity;
 
-        public AlienMovementController(Vector3 initialPosition, IMoveComponent component, EnemyConfig config)
+        public AlienMovementController(Vector3 initialPosition, IMoveEntity entity, EnemyConfig config)
         {
             _position = initialPosition;
-            _moveComponent = component;
+            _moveEntity = entity;
             _config = (AlienConfig)config;
             _rotationAngle = 0;
         }
@@ -30,6 +30,9 @@ namespace Game.Gameplay.Enemies.Alien
             _rotationAngle = Vector2.SignedAngle(Vector2.up, new Vector2(_currentDirection.x, _currentDirection.y));
             _velocity = _config.Speed * deltaTime;
             _position += _currentDirection * _velocity;
+            
+            var rotation = Quaternion.Euler(Vector3.forward * _rotationAngle);
+            _moveEntity.SetPositionAndRotation(_position, rotation);
         }
 
         Vector3 IMovable.GetPosition()
@@ -40,11 +43,6 @@ namespace Game.Gameplay.Enemies.Alien
         float IMovable.GetDirectionAngle()
         {
             return _rotationAngle;
-        }
-
-        IMoveComponent IMovable.GetMoveComponent()
-        {
-            return _moveComponent;
         }
 
         public float GetVelocity()

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Game.BindingContainer;
 using Game.Core.GameSystems;
 using Game.Core.Life;
@@ -14,65 +16,78 @@ using Random = UnityEngine.Random;
 
 namespace Game.Gameplay.Enemies
 {
-    public class EnemyOwner : MonoBehaviour
+    public class EnemySpawnSystem
     {
-        [SerializeField] private EnemySpawnConfig _spawnConfig;
+        private CancellationTokenSource _cancellationToken;
 
-        private readonly Dictionary<ILiveable, EntityConfigurator> _enemies =
-            new Dictionary<ILiveable, EntityConfigurator>();
-
-        private bool _levelFinished;
-        private IMovable _target;
-        private IEnemyLifeFactory _enemyLifeFactory;
-
-        // Round data
-        private int _spawnedEnemies;
-        private GameRoundData _gameRoundData;
-
-        public void CreateRound(IMovable target, IEnemyLifeFactory enemyLifeFactory, GameRoundData gameRoundData)
+        public void CreateRound(IMovable target, IEnemyLifeFactory enemyLifeFactory, GameRoundData gameRoundData,
+            EnemySpawnConfig spawnConfig)
         {
-            _levelFinished = false;
+            _cancellationToken = new CancellationTokenSource();
             _target = target;
             _enemyLifeFactory = enemyLifeFactory;
             _spawnedEnemies = 0;
             _gameRoundData = gameRoundData;
-            StartCoroutine(SpawnEnemies());
+            _spawnConfig = spawnConfig;
+            Spawn().Forget();
         }
 
         public void DestroyRound()
         {
-            _levelFinished = true;
-            StopAllCoroutines();
+            _cancellationToken.Cancel();
+            _cancellationToken.Dispose();
+
             foreach (var enemy in _enemies.Keys)
             {
                 var configurator = _enemies[enemy];
                 var obj = configurator.GetGameObject();
                 var pool = DiContainer.Resolve<GoPool>();
                 pool.Push(obj);
-                configurator.UnregisterFormAllSystems();
+                configurator.UnregisterFromAllSystems();
             }
 
             _enemies.Clear();
         }
 
-        private IEnumerator SpawnEnemies()
+        private async UniTask Spawn()
         {
             for (int i = 0; i < _spawnConfig.PrewarmCount; i++)
             {
                 SpawnEnemy();
             }
 
-            while (!_levelFinished)
+            while (!_cancellationToken.IsCancellationRequested)
             {
                 while (_spawnedEnemies >= _spawnConfig.MaxEnemies)
                 {
-                    yield return null;
+                    await UniTask.Yield();
                 }
 
                 var delay = SpawnEnemy();
-                yield return new WaitForSeconds(delay);
+                var delayMs = (int)(delay * 1000);
+                await UniTask.Delay(delayMs);
             }
         }
+
+        public void Update()
+        {
+            // Nothing to Update yet
+        }
+
+        //------govno
+
+
+        private EnemySpawnConfig _spawnConfig;
+
+        private readonly Dictionary<ILiveable, ComponentConfigurator> _enemies =
+            new Dictionary<ILiveable, ComponentConfigurator>();
+
+        private IMovable _target;
+        private IEnemyLifeFactory _enemyLifeFactory;
+
+        // Round data
+        private int _spawnedEnemies;
+        private GameRoundData _gameRoundData;
 
         public float SpawnEnemy()
         {
@@ -86,7 +101,7 @@ namespace Game.Gameplay.Enemies
         public float SpawnEnemy(EnemyConfig enemyConfig, Vector3 position)
         {
             // Create Entity Configurator
-            var entityConfigurator = new EntityConfigurator();
+            var entityConfigurator = new ComponentConfigurator();
 
             // Get Enemy Game Object from Pool
             var pool = DiContainer.Resolve<GoPool>();
@@ -97,7 +112,7 @@ namespace Game.Gameplay.Enemies
             enemyGameObject.transform.position = position;
 
             // Get Movement Component
-            var movementComponent = enemyGameObject.GetComponent<IMoveComponent>();
+            var movementComponent = enemyGameObject.GetComponent<IMoveEntity>();
 
             // Get Movement Entity Controller
             var movementController = enemyConfig.GetMovementController(position, movementComponent);
@@ -112,12 +127,14 @@ namespace Game.Gameplay.Enemies
             }
 
             var collideController =
-                new EnemyCollideController(movementController, (reason) => { lifeController.Release(reason); }, enemyConfig);
+                new EnemyCollideController(movementController, (reason) => { lifeController.Release(reason); },
+                    enemyConfig);
 
             // Register entity controllers in Systems
-            entityConfigurator.AddSystem<LifeSystem>(lifeController);
-            entityConfigurator.AddSystem<MovementSystem>(movementController);
-            entityConfigurator.AddSystem<CollideSystem>(collideController);
+
+            entityConfigurator.AddSystem<LifeSystem, ILiveable>(lifeController);
+            entityConfigurator.AddSystem<MovementSystem, IMovable>(movementController);
+            entityConfigurator.AddSystem<CollideSystem, ICollidable>(collideController);
 
             // Add configurator to dictionary using Life Controller as a Key
             _enemies.Add(lifeController, entityConfigurator);
@@ -136,7 +153,7 @@ namespace Game.Gameplay.Enemies
             var obj = configurator.GetGameObject();
             var pool = DiContainer.Resolve<GoPool>();
             pool.Push(obj);
-            configurator.UnregisterFormAllSystems();
+            configurator.UnregisterFromAllSystems();
             _spawnedEnemies--;
             if (!self)
             {

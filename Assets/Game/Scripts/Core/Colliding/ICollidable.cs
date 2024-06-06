@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.Core.Colliding
 {
     // ReSharper disable once IdentifierTypo
-    public interface ICollidable : IGameEntity
+    public interface ICollidable : IGameComponent
     {
         public enum ColliderType
         {

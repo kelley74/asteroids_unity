@@ -20,7 +20,7 @@ namespace Game.Gameplay.Player
 
         public IMovable Player => _playerMovementController;
         
-        private EntityConfigurator _playerConfigurator;
+        private ComponentConfigurator _playerConfigurator;
         private IMovable _playerMovementController;
 
         private bool _isGameActive;
@@ -34,15 +34,15 @@ namespace Game.Gameplay.Player
             var pool = DiContainer.Resolve<GoPool>();
             var playerObject = pool.Pull(_prefab);
             // Movement Controller
-            var movementComponent = playerObject.GetComponent<IMoveComponent>();
-            _playerMovementController = new PlayerMovementController(Vector3.zero, movementComponent, _config);
+            var movementComponent = playerObject.GetComponent<IMoveEntity>();
+            _playerMovementController = new PlayerMovementComponent(Vector3.zero, movementComponent, _config);
             var collideController = new PlayerCollideController(_playerMovementController, onRoundComplete);
 
-            _playerConfigurator = new EntityConfigurator();
+            _playerConfigurator = new ComponentConfigurator();
             _playerConfigurator.AssignGameObject(playerObject);
 
-            _playerConfigurator.AddSystem<MovementSystem>(_playerMovementController);
-            _playerConfigurator.AddSystem<CollideSystem>(collideController);
+            _playerConfigurator.AddSystem<MovementSystem, IMovable>(_playerMovementController);
+            _playerConfigurator.AddSystem<CollideSystem, ICollidable>(collideController);
 
             // Start Constant Shooting
             StartCoroutine(_playerShootController.ShootBullets(_playerMovementController, playerObject.transform,
@@ -61,7 +61,7 @@ namespace Game.Gameplay.Player
             var pool = DiContainer.Resolve<GoPool>();
             pool.Push(_playerConfigurator.GetGameObject());
 
-            _playerConfigurator.UnregisterFormAllSystems();
+            _playerConfigurator.UnregisterFromAllSystems();
 
             _playerMovementController = null;
             _isGameActive = false;

@@ -19,17 +19,19 @@ namespace Game.Gameplay.Player
 
             while (true)
             {
-                var configurator = new EntityConfigurator();
+                var configurator = new ComponentConfigurator();
                 var bullet = pool.Pull(projectilePrefab);
                 configurator.AssignGameObject(bullet);
-                var movementComponent = bullet.GetComponent<IMoveComponent>();
+                var movementComponent = bullet.GetComponent<IMoveEntity>();
 
-                var moveController = new BulletMovementController(playerMoveController.GetPosition(),
+                var position = playerMoveController.GetPosition();
+                
+                var moveController = new BulletMovementController(position,
                     playerGameObjectTransform.eulerAngles.z, movementComponent, config.BulletSpeed);
 
                 var lifeModel = new BulletLifeModel((_) =>
                 {
-                    configurator.UnregisterFormAllSystems();
+                    configurator.UnregisterFromAllSystems();
                     var obj = configurator.GetGameObject();
                     pool.Push(obj);
                 }, moveController);
@@ -41,13 +43,13 @@ namespace Game.Gameplay.Player
                     var bulletObject = configurator.GetGameObject();
                     var floaterSpawner = DiContainer.Resolve<FloaterSpawner>();
                     floaterSpawner.SpawnBulletFloater(bulletObject.transform.position);
-                    configurator.UnregisterFormAllSystems();
+                    configurator.UnregisterFromAllSystems();
                     pool.Push(bulletObject);
                 });
 
-                configurator.AddSystem<MovementSystem>(moveController);
-                configurator.AddSystem<LifeSystem>(lifeController);
-                configurator.AddSystem<CollideSystem>(collideController);
+                configurator.AddSystem<MovementSystem, IMovable>(moveController);
+                configurator.AddSystem<LifeSystem, ILiveable>(lifeController);
+                configurator.AddSystem<CollideSystem, ICollidable>(collideController);
 
                 yield return new WaitForSeconds(config.BulletCooldownTime);
             }
@@ -58,17 +60,17 @@ namespace Game.Gameplay.Player
         {
             var pool = DiContainer.Resolve<GoPool>();
 
-            var configurator = new EntityConfigurator();
+            var configurator = new ComponentConfigurator();
             var laser = pool.Pull(projectilePrefab);
             configurator.AssignGameObject(laser);
-            var movementComponent = laser.GetComponent<IMoveComponent>();
+            var movementComponent = laser.GetComponent<IMoveEntity>();
 
             var moveController = new BulletMovementController(playerMoveController.GetPosition(),
                 playerGameObjectTransform.eulerAngles.z, movementComponent, config.LaserSpeed);
 
             var lifeModel = new BulletLifeModel((_) =>
             {
-                configurator.UnregisterFormAllSystems();
+                configurator.UnregisterFromAllSystems();
                 var obj = configurator.GetGameObject();
                 pool.Push(obj);
             }, moveController);
@@ -82,9 +84,9 @@ namespace Game.Gameplay.Player
                 floaterSpawner.SpawnBulletFloater(bulletObject.transform.position);
             });
 
-            configurator.AddSystem<MovementSystem>(moveController);
-            configurator.AddSystem<LifeSystem>(lifeController);
-            configurator.AddSystem<CollideSystem>(collideController);
+            configurator.AddSystem<MovementSystem, IMovable>(moveController);
+            configurator.AddSystem<LifeSystem, ILiveable>(lifeController);
+            configurator.AddSystem<CollideSystem, ICollidable>(collideController);
         }
     }
 }

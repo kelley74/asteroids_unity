@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Gameplay.Player
 {
-    public class PlayerMovementController : IMovable
+    public class PlayerMovementComponent : IMovable
     {
         private Vector3 _directionalVelocity;
         private Vector3 _position;
@@ -15,15 +15,15 @@ namespace Game.Gameplay.Player
         private float _rawVelocity;
         private float _velocity;
 
-        private readonly IMoveComponent _moveComponent;
+        private readonly IMoveEntity _moveEntity;
         private readonly InputController _inputController;
         private readonly PlayerConfig _config;
         private readonly Vector3 _boundaries;
 
-        public PlayerMovementController(Vector3 initialPosition, IMoveComponent component, PlayerConfig config)
+        public PlayerMovementComponent(Vector3 initialPosition, IMoveEntity entity, PlayerConfig config)
         {
             _position = initialPosition;
-            _moveComponent = component;
+            _moveEntity = entity;
             _config = config;
             _inputController = DiContainer.Resolve<InputController>();
             var camera = Camera.main;
@@ -37,24 +37,19 @@ namespace Game.Gameplay.Player
             _boundaries = new Vector3(ratio * size, size) * _config.BoundariesScale;
         }
 
-        IMoveComponent IMovable.GetMoveComponent()
+        float IMovable.GetDirectionAngle()
         {
-            return _moveComponent;
+            return _angle;
         }
-
-        public float GetVelocity()
-        {
-            return _velocity;
-        }
-
+        
         Vector3 IMovable.GetPosition()
         {
             return _position;
         }
 
-        float IMovable.GetDirectionAngle()
+        public float GetVelocity()
         {
-            return _angle;
+            return _velocity;
         }
 
         void IMovable.Move(float deltaTime)
@@ -99,6 +94,9 @@ namespace Game.Gameplay.Player
             {
                 _position.y += _boundaries.y * _config.TeleportOffset;
             }
+            
+            var rotation = Quaternion.Euler(Vector3.forward * _angle);
+            _moveEntity.SetPositionAndRotation(_position, rotation);
         }
     }
 }

@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace Game.Core.Movement
 {
-    public interface IMovable : IGameEntity
+    public interface IMovable : IGameComponent
     {
         void Move(float deltaTime);
 
         Vector3 GetPosition();
         float GetDirectionAngle();
-        IMoveComponent GetMoveComponent();
         float GetVelocity();
     }
 }
